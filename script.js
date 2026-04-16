@@ -38,12 +38,16 @@ const porcentajeSalud = 0.04;
 const porcentajePension = 0.04;
 const porcentFondoSolidaridad = 0.01;
 
-let fondoSolidaridad = IBC * porcentFondoSolidaridad;
+function calcularPorcentaje (base, porcentaje) {
+  return base * porcentaje;
+}
+
+let fondoSolidaridad = calcularPorcentaje(IBC, porcentFondoSolidaridad);
 IBC>=4*SMLV ? fondoSolidaridad : fondoSolidaridad = 0;
 
 let SalarioTotal = salario + comisiones + horasExtras;
-let IBC = SalarioTotal * porcentajeIBC;
-let salud = IBC * porcentajeSalud;
-let pension = IBC * porcentajePension;
+let IBC = calcularPorcentaje(SalarioTotal, porcentajeIBC);
+let salud = calcularPorcentaje(IBC, porcentajeSalud);
+let pension = calcularPorcentaje(IBC, porcentajePension);
 
 
