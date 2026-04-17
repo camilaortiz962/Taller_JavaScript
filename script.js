@@ -27,11 +27,8 @@ const SMIV = 22761765;
 const SubTransporte = 249095;
 const undValorTributario = 52.37;  
 
-const riesgo1 = 0.522;
-const riesgo2 = 1.044;
-const riesgo3 = 2.436;
-const riesgo4 = 4.350;
-const riesgo5 = 6.960;
+const riesgo = [0.522, 1.044, 2.436, 4.350, 6.960];
+
 
 const porcentajeIBC = 0.7;
 const porcentajeSalud = 0.04;
