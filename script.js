@@ -1,7 +1,7 @@
-let nombreCompleto = "";
-let edad = 0;
-let tipoDoc = "";
-let numeroDoc = "";  
+let nombreCompleto = document.getElementById(nombreCompleto).value ;
+let edad = document.getElementById(edad).value ;
+let tipoDoc = document.getElementById(tipoDoc).value ;
+let numeroDoc = document.getElementById(numeroDoc).value ; 
 
 if (edad < 18 ) {
 console.log ("No tiene permitido entrar");
