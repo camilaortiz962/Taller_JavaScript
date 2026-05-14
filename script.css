@@ -27,11 +27,6 @@ form{
 }
 
 
-form:hover{
-    transform: scale(1.01);
-}
-
-
 ul{
     list-style: none;
     display: flex;
