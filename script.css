@@ -172,3 +172,14 @@ form{
             }
 
         }
+        .input-error{
+    border: 2px solid red !important;
+    background-color: #ffecec;
+}
+
+.error{
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+}

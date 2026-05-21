@@ -1,205 +1,368 @@
- const formulario = document.getElementById("formulario");
+const formulario = document.getElementById("formulario");
 
-        const SMLV = 1750905;
-        const porcentajeIBC = 0.7;
-        const porcentajeSalud = 0.04;
-        const porcentajePension = 0.04;
-        const porcentFondoSolidaridad = 0.01;
+const SMLV = 1750905;
+const porcentajeIBC = 0.7;
+const porcentajeSalud = 0.04;
+const porcentajePension = 0.04;
+const porcentFondoSolidaridad = 0.01;
 
-        function mostrarError(input, mensaje, idError){
 
-            input.classList.add("input-error");
+function mostrarError(input, mensaje, idError){
 
-            const error = document.getElementById(idError);
+    input.classList.add("input-error");
 
-            error.style.display = "block";
-            error.textContent = mensaje;
+    const error = document.getElementById(idError);
 
-        }
+    error.style.display = "block";
+    error.innerText = mensaje;
+}
 
-        function limpiarError(input, idError){
 
-            input.classList.remove("input-error");
+function limpiarError(input, idError){
 
-            const error = document.getElementById(idError);
+    input.classList.remove("input-error");
 
-            error.style.display = "none";
-            error.textContent = "";
+    const error = document.getElementById(idError);
 
-        }
+    error.style.display = "none";
+    error.innerText = "";
+}
 
-        function calcularPorcentaje(base, porcentaje){
-            return base * porcentaje;
-        }
+function validarNombre(){
 
-        formulario.addEventListener("submit", function(e){
+    const input = document.getElementById("nombreCompleto");
+    const valor = input.value.trim();
 
-            e.preventDefault();
+    if(valor === ""){
 
-            let valido = true;
+        mostrarError(
+            input,
+            "El nombre es obligatorio",
+            "errorNombre"
+        );
 
-            const nombreCompleto = document.getElementById("nombreCompleto");
-            const edad = document.getElementById("edad");
-            const tipoDoc = document.getElementById("tipoDoc");
-            const numeroDoc = document.getElementById("numeroDoc");
-            const salario = document.getElementById("salario");
-            const comisiones = document.getElementById("comisiones");
-            const horasExtras = document.getElementById("horasExtras");
+        return false;
+    }
 
-            limpiarError(nombreCompleto, "errorNombre");
-            limpiarError(edad, "errorEdad");
-            limpiarError(tipoDoc, "errorTipoDoc");
-            limpiarError(numeroDoc, "errorNumeroDoc");
-            limpiarError(salario, "errorSalario");
+    if(valor.length < 5){
 
+        mostrarError(
+            input,
+            "Debe tener mínimo 5 caracteres",
+            "errorNombre"
+        );
 
-            if(nombreCompleto.value.trim().length < 5){
+        return false;
+    }
 
-                mostrarError(
-                    nombreCompleto,
-                    "El nombre debe tener mínimo 5 caracteres",
-                    "errorNombre"
-                );
+    if(valor.length > 50){
 
-                valido = false;
-            }
+        mostrarError(
+            input,
+            "Máximo 50 caracteres",
+            "errorNombre"
+        );
 
-            if(
-                edad.value === "" ||
-                edad.value < 0 ||
-                edad.value > 120
-            ){
+        return false;
+    }
 
-                mostrarError(
-                    edad,
-                    "La edad debe estar entre 0 y 120",
-                    "errorEdad"
-                );
+    if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/.test(valor)){
 
-                valido = false;
-            }
+        mostrarError(
+            input,
+            "Solo se permiten letras",
+            "errorNombre"
+        );
 
-            if(tipoDoc.value === ""){
+        return false;
+    }
 
-                mostrarError(
-                    tipoDoc,
-                    "Seleccione un tipo de documento",
-                    "errorTipoDoc"
-                );
+    limpiarError(input, "errorNombre");
 
-                valido = false;
-            }
+    return true;
+}
 
-            if(
-                numeroDoc.value.length < 5 ||
-                numeroDoc.value.length > 15
-            ){
 
-                mostrarError(
-                    numeroDoc,
-                    "El documento debe tener entre 5 y 15 números",
-                    "errorNumeroDoc"
-                );
+function validarEdad(){
 
-                valido = false;
-            }
+    const input = document.getElementById("edad");
 
-            if(salario.value <= 0){
+    const valor = Number(input.value);
 
-                mostrarError(
-                    salario,
-                    "Ingrese un salario válido",
-                    "errorSalario"
-                );
+    if(input.value === ""){
 
-                valido = false;
-            }
+        mostrarError(
+            input,
+            "La edad es obligatoria",
+            "errorEdad"
+        );
 
-            if(!valido){
-                return;
-            }
+        return false;
+    }
 
+    if(valor < 0 || valor > 120){
 
-            let edadValor = Number(edad.value);
-            let salarioValor = Number(salario.value);
-            let comisionesValor = Number(comisiones.value) || 0;
-            let horasExtrasValor = Number(horasExtras.value) || 0;
+        mostrarError(
+            input,
+            "Edad inválida",
+            "errorEdad"
+        );
 
-            let mensajeEdad = "";
+        return false;
+    }
 
-            if (edadValor < 18){
+    limpiarError(input, "errorEdad");
 
-                mensajeEdad = "No tiene permitido entrar";
+    return true;
+}
 
-            } 
-            else if (edadValor >= 18 && edadValor <= 25){
+function validarTipoDoc(){
 
-                mensajeEdad = "Usuario beneficiario por cotizante, no puede entrar";
+    const input = document.getElementById("tipoDoc");
 
-            } 
-            else if (edadValor >= 60){
+    if(input.value === ""){
 
-                mensajeEdad = "Se calculará la pensión";
+        mostrarError(
+            input,
+            "Seleccione un tipo de documento",
+            "errorTipoDoc"
+        );
 
-            } 
-            else {
+        return false;
+    }
 
-                mensajeEdad = "Puede entrar";
+    limpiarError(input, "errorTipoDoc");
 
-            }
+    return true;
+}
 
+function validarDocumento(){
 
-            let salarioTotal = salarioValor + comisionesValor + horasExtrasValor;
+    const input = document.getElementById("numeroDoc");
 
-            let IBC = calcularPorcentaje(
-                salarioTotal,
-                porcentajeIBC
-            );
+    const valor = input.value;
 
-            let salud = calcularPorcentaje(
-                IBC,
-                porcentajeSalud
-            );
+    if(valor === ""){
 
-            let pension = calcularPorcentaje(
-                IBC,
-                porcentajePension
-            );
+        mostrarError(
+            input,
+            "El documento es obligatorio",
+            "errorNumeroDoc"
+        );
 
-            let fondoSolidaridad = 0;
+        return false;
+    }
 
-            if(IBC >= 4 * SMLV){
+    if(valor.length < 5){
 
-                fondoSolidaridad = calcularPorcentaje(
-                    IBC,
-                    porcentFondoSolidaridad
-                );
+        mostrarError(
+            input,
+            "Mínimo 5 números",
+            "errorNumeroDoc"
+        );
 
-            }
+        return false;
+    }
 
-            const resultado = document.getElementById("resultado");
+    if(valor.length > 15){
 
-            resultado.style.display = "block";
+        mostrarError(
+            input,
+            "Máximo 15 números",
+            "errorNumeroDoc"
+        );
 
-            resultado.innerHTML = `
+        return false;
+    }
 
-                <p><strong>Estado:</strong> ${mensajeEdad}</p>
+    if(!/^[0-9]+$/.test(valor)){
 
-                <p><strong>Salario Total:</strong> 
-                $${salarioTotal.toLocaleString()}</p>
+        mostrarError(
+            input,
+            "Solo se permiten números",
+            "errorNumeroDoc"
+        );
 
-                <p><strong>IBC:</strong> 
-                $${IBC.toLocaleString()}</p>
+        return false;
+    }
 
-                <p><strong>Salud:</strong> 
-                $${salud.toLocaleString()}</p>
+    limpiarError(input, "errorNumeroDoc");
 
-                <p><strong>Pensión:</strong> 
-                $${pension.toLocaleString()}</p>
+    return true;
+}
 
-                <p><strong>Fondo Solidaridad:</strong> 
-                $${fondoSolidaridad.toLocaleString()}</p>
 
-            `;
+function validarSalario(){
 
-        });
+    const input = document.getElementById("salario");
+
+    const valor = Number(input.value);
+
+    if(input.value === ""){
+
+        mostrarError(
+            input,
+            "El salario es obligatorio",
+            "errorSalario"
+        );
+
+        return false;
+    }
+
+    if(valor <= 0){
+
+        mostrarError(
+            input,
+            "Ingrese un salario válido",
+            "errorSalario"
+        );
+
+        return false;
+    }
+
+    limpiarError(input, "errorSalario");
+
+    return true;
+}
+
+function calcularPorcentaje(base, porcentaje){
+
+    return base * porcentaje;
+}
+
+
+formulario.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    let valido = true;
+
+
+    if(!validarNombre()){
+        valido = false;
+    }
+
+    if(!validarEdad()){
+        valido = false;
+    }
+
+    if(!validarTipoDoc()){
+        valido = false;
+    }
+
+    if(!validarDocumento()){
+        valido = false;
+    }
+
+    if(!validarSalario()){
+        valido = false;
+    }
+
+
+    if(!valido){
+
+        alert("Corrija los errores antes de continuar");
+
+        return;
+    }
+
+
+    const nombreCompleto = document.getElementById("nombreCompleto").value;
+
+    const edad = Number(
+        document.getElementById("edad").value
+    );
+
+    const salario = Number(
+        document.getElementById("salario").value
+    );
+
+    const comisiones = Number(
+        document.getElementById("comisiones").value
+    ) || 0;
+
+    const horasExtras = Number(
+        document.getElementById("horasExtras").value
+    ) || 0;
+
+
+    let mensajeEdad = "";
+
+    if (edad < 18){
+
+        mensajeEdad = "No tiene permitido entrar";
+
+    } 
+    else if (edad >= 18 && edad <= 25){
+
+        mensajeEdad = "Usuario beneficiario por cotizante, no puede entrar";
+
+    } 
+    else if (edad >= 60){
+
+        mensajeEdad = "Se calculará la pensión";
+
+    } 
+    else {
+
+        mensajeEdad = "Puede entrar";
+
+    }
+
+
+    let salarioTotal = salario + comisiones + horasExtras;
+
+    let IBC = calcularPorcentaje(
+        salarioTotal,
+        porcentajeIBC
+    );
+
+    let salud = calcularPorcentaje(
+        IBC,
+        porcentajeSalud
+    );
+
+    let pension = calcularPorcentaje(
+        IBC,
+        porcentajePension
+    );
+
+    let fondoSolidaridad = 0;
+
+    if(IBC >= 4 * SMLV){
+
+        fondoSolidaridad = calcularPorcentaje(
+            IBC,
+            porcentFondoSolidaridad
+        );
+
+    }
+
+    const resultado = document.getElementById("resultado");
+
+    resultado.style.display = "block";
+
+    resultado.innerHTML = `
+
+        <p><strong>Nombre:</strong> ${nombreCompleto}</p>
+
+        <p><strong>Estado:</strong> ${mensajeEdad}</p>
+
+        <p><strong>Salario Total:</strong> 
+        $${salarioTotal.toLocaleString()}</p>
+
+        <p><strong>IBC:</strong> 
+        $${IBC.toLocaleString()}</p>
+
+        <p><strong>Salud:</strong> 
+        $${salud.toLocaleString()}</p>
+
+        <p><strong>Pensión:</strong> 
+        $${pension.toLocaleString()}</p>
+
+        <p><strong>Fondo Solidaridad:</strong> 
+        $${fondoSolidaridad.toLocaleString()}</p>
+
+    `;
+
+});
