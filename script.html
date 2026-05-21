@@ -9,42 +9,123 @@
     <body> 
     <script src="script.js"></script> 
 
-   <form method="get">
-    <ul>
-        <li>
-            <label for="nombreCompleto" > Nombre: </label>
-            <input type="text" id="nombreCompleto" name="nombreCompleto"   placeholder="Ingrese su nombre completo"
-                minlength="5"
-                maxlength="50"/>
-        </li>
+  <div class="contenedor">
 
-         <li>
-            <label for="edad" > Edad: </label>
-            <input type="number" id="edad" name="edad" min="0" max="120" placeholder="Ingrese su edad"/>
-        </li>
+        <h1>Formulario de Usuario</h1>
 
-         <li>
-            <label for="tipoDoc" > Tipo de Documento: </label>
-            <select name="tipoDoc" >
-                 <option value="" disabled selected>
-                    Seleccione una opción
-                </option>
+        <form id="formulario">
 
-                <option value="RC">Registro Civil</option>
-                <option value="TI">TI</option>
-                <option value="CC">CC</option>
-                <option value="CE">CE</option>  
-                <option value="PP">PP</option>  
-            </select>
-        </li>
+            <ul>
 
-         <li>
-            <label for="numeroDoc" > Numero de Documento: </label>
-            <input type="number" id="numeroDoc" name="numeroDoc" placeholder="Ingrese su número de documento"
-                minlength="5"
-                maxlength="15"/>
-        </li>
-    </ul>
-   </form>
+                <li>
+                    <label for="nombreCompleto">Nombre Completo</label>
+
+                    <input 
+                        type="text"
+                        id="nombreCompleto"
+                        placeholder="Ingrese su nombre completo"
+                    >
+
+                    <small class="error" id="errorNombre"></small>
+                </li>
+
+                <li>
+                    <label for="edad">Edad</label>
+
+                    <input 
+                        type="number"
+                        id="edad"
+                        placeholder="Ingrese su edad"
+                    >
+
+                    <small class="error" id="errorEdad"></small>
+                </li>
+
+                <li>
+                    <label for="tipoDoc">Tipo de Documento</label>
+
+                    <select id="tipoDoc">
+
+                        <option value="">Seleccione una opción</option>
+                        <option value="RC">Registro Civil</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PP">Pasaporte</option>
+
+                    </select>
+
+                    <small class="error" id="errorTipoDoc"></small>
+                </li>
+
+                <li>
+                    <label for="numeroDoc">Número de Documento</label>
+
+                    <input 
+                        type="number"
+                        id="numeroDoc"
+                        placeholder="Ingrese su documento"
+                    >
+
+                    <small class="error" id="errorNumeroDoc"></small>
+                </li>
+
+                <li>
+                    <label for="salario">Salario</label>
+
+                    <input 
+                        type="number"
+                        id="salario"
+                        placeholder="Ingrese su salario"
+                    >
+
+                    <small class="error" id="errorSalario"></small>
+                </li>
+
+                <li>
+                    <label for="comisiones">Comisiones</label>
+
+                    <input 
+                        type="number"
+                        id="comisiones"
+                        placeholder="Ingrese las comisiones"
+                    >
+                </li>
+
+                <li>
+                    <label for="horasExtras">Horas Extras</label>
+
+                    <input 
+                        type="number"
+                        id="horasExtras"
+                        placeholder="Ingrese horas extras"
+                    >
+                </li>
+
+                <li>
+                    <label for="nivelRiesgo">Nivel de Riesgo</label>
+
+                    <select id="nivelRiesgo">
+
+                        <option value="">Seleccione</option>
+                        <option value="1">Nivel 1</option>
+                        <option value="2">Nivel 2</option>
+                        <option value="3">Nivel 3</option>
+                        <option value="4">Nivel 4</option>
+                        <option value="5">Nivel 5</option>
+
+                    </select>
+
+                </li>
+
+            </ul>
+
+            <button type="submit">Calcular</button>
+
+        </form>
+
+        <div class="resultado" id="resultado"></div>
+
+    </div>
 </body> 
 </html>  
